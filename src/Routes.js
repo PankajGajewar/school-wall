@@ -12,7 +12,7 @@ export default (
         <Route path="/" history={browserHistory} component={App}>
             <Route path="home" component={Home} />
             <Route path="time-table" component={TimeTable} />
-            <Route path="login" component={Login} />
+            {/* <Route path="login" component={Login} /> */}
             {/* <Route path="contact" component={ContactUsComponent} />
             <Route path="employee" component={EmployeeComponent} />
             <Route path="register" component={RegistrationComponent} />*/}
