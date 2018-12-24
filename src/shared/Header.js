@@ -11,14 +11,9 @@ class Header extends Component {
           <img src={logo} width="130px" height="115px" alt="Unable to load image" />
         </div>
         <div className="col-md-10 pt-4">
-          <Link activeClassName='btn btn-dark' to="/home" className="m-1 btn btn-light"> Home </Link>
+          <Link activeClassName='btn btn-dark' to="/dashboard" className="m-1 btn btn-light"> Dashboard </Link>
           <Link activeClassName='btn btn-dark' to="/time-table" className="m-1 btn btn-light"> Time Table </Link>
-          {/* <Link activeClassName='btn btn-dark' to="/home" className="m-1 btn btn-light"> Exam/Result </Link>
-          <Link activeClassName='btn btn-dark' to="/home" className="m-1 btn btn-light"> Leaves </Link>
-          <Link activeClassName='btn btn-dark' to="/home" className="m-1 btn btn-light"> Contact Us </Link>
-          <Link activeClassName='btn btn-dark' to="/home" className="m-1 btn btn-light"> Profile </Link>
-          <Link activeClassName='btn btn-dark' to="/home" className="m-1 btn btn-light"> Change Password </Link>
-          <Link activeClassName='btn btn-dark' to="/home" className="m-1 btn btn-light"> Logout </Link> */}
+          <Link activeClassName='btn btn-dark' to="/login" className="m-1 btn btn-light"> Logout </Link>
         </div>
       </div>
     );

@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-// import logo from './logo.svg';
 import './App.css';
 
 import Header from './shared/Header';
 import Footer from './shared/Footer';
-// import Login from './Components/Login/LoginComponent';
 
 class App extends Component {
   render() {
@@ -23,7 +21,6 @@ class App extends Component {
           </div>
           <Footer />
         </div>
-        {/* <Login /> */}
       </div>
     );
   }

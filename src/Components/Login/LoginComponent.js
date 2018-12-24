@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Link } from 'react-router';
+import { browserHistory } from 'react-router';
 
 class LoginComponent extends Component {
 
@@ -9,23 +9,18 @@ class LoginComponent extends Component {
         password: ''
     }
 
-    login() {
-        console.log("clicked");
-        // this.setState(
-        //     {
-        //         username: event.target.value,
-        //         password: event.target.value
-        //     }
-        // )
-        console.log("Username: ", this.state.username);
-        console.log("Password: ", this.state.password);
-        if (this.state.username === this.state.password) {
-            console.log('ok');
+    login = () => {
 
+        if (this.state.username === this.state.password) {
+            console.log("clicked");
+            console.log("Username: ", this.state.username);
+            console.log("Password: ", this.state.password);
+            browserHistory.push('/dashboard');
         }
-        else {
-            console.log('ok');
-        }
+        // else {
+        //     // browserHistory.push('/login');
+        //     return null;
+        // }
     }
 
     usernameHandler = (event) => {
@@ -50,7 +45,6 @@ class LoginComponent extends Component {
                                 Login
                             </div>
                             <div className="card-body">
-                                {/* <form onSubmit={this.login}> */}
                                 <form>
                                     <div className="form-group">
                                         <label>Email ID</label><span className="text-danger">*</span>
@@ -62,7 +56,7 @@ class LoginComponent extends Component {
                                         <input className="form-control" type="password" required
                                             onChange={this.passwordHandler} value={this.state.password}></input>
                                     </div>
-                                    <button type="submit" className="btn btn-success">Login</button>
+                                    <button type="submit" onClick={this.login} className="btn btn-success">Login</button>
                                     {/* <Link className="btn btn-success" to="/home" onClick="return this.login()">Login</Link> */}
                                     {/* <div className="row">
                                         <div className="col-md-6 text-right">
