@@ -4,17 +4,15 @@ class Footer extends Component {
 
     render() {
         return (
-            <div className="mx-auto">
-                <hr></hr>
-
-                <div className="">
+            <div className="row">
+                <div className="col-md-12">
+                    <hr></hr>
                     <a href="http://www.techprimelab.com/" target="_blank" >&copy; TechPrimeLab Soft. Pvt. Ltd.</a>
                     <br />
                     <p>
                         Experience more than expected. Always!
                     </p>
                 </div>
-
             </div>
         );
     }
