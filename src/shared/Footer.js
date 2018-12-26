@@ -4,13 +4,13 @@ class Footer extends Component {
 
     render() {
         return (
-            <div className="row">
+            <div className="row pt-5">
                 <div className="col-md-12">
                     <hr></hr>
-                    <a href="http://www.techprimelab.com/" target="_blank" >&copy; TechPrimeLab Soft. Pvt. Ltd.</a>
+                    <a className="h5" href="https://vikhepatil.org/vpmspune/" target="_blank" >&copy; Vikhe Patil Memorial School</a>
                     <br />
                     <p>
-                        Experience more than expected. Always!
+                        Making Life Meaningful
                     </p>
                 </div>
             </div>

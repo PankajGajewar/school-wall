@@ -8,20 +8,23 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-10">
-              <Header />
-            </div>
-            <div className="row">
-              <div className="col-md-12">
-                {this.props.children}
-              </div>
-            </div>
+
+        <div className="col-md-12">
+          <Header />
+        </div>
+        <div className="row pt-5">
+          <div className="col-md-12">
+            {this.props.children}
           </div>
-          <Footer />
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <Footer />
+          </div>
         </div>
       </div>
+
+
     );
   }
 }
