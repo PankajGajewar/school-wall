@@ -7,7 +7,7 @@ import * as serviceWorker from './serviceWorker';
 import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router';
 import Home from './Components/Home/HomeComponent';
 // import TimeTable from './Components/TimeTable/TimeTableComponent';
-import Login from './Components/Login/LoginComponent';
+// import Login from './Components/Login/LoginComponent';
 import Routes from './Routes';
 
 

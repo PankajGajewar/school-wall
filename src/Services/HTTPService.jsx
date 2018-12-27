@@ -43,22 +43,18 @@ export default HTTPService;
 function getRequest(url) {
     return instance.get(url)
         .then(response => {
-            // return response
-            console.log(response);
+            return response
         })
         .catch(function (error) {
-            // return error
-            console.log('error:',error);
+            return error
         });
 }
 
 function postRequest(url, data) {
     return instance.post(url, data)
         .then(function (response) {
-            // return response;
-            console.log('POST',response);
+            return response;
         }).catch(function (error) {
             return error;
-            // console.log('error:',error);
         });
 }

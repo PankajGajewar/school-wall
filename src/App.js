@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
-
 import Header from './shared/Header';
 import Footer from './shared/Footer';
 
 class App extends Component {
+
   render() {
     return (
       <div className="App">
@@ -23,8 +23,6 @@ class App extends Component {
           </div>
         </div>
       </div>
-
-
     );
   }
 }

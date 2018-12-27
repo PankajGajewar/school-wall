@@ -5,6 +5,14 @@ import React, { Component } from 'react';
 
 class PaymentComponent extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            posts: []
+        };
+        this.fetchGroupDetails = this.fetchGroupDetails.bind(this);
+    }
+
     fetchGroupDetails() {
 
         const body = {
@@ -19,29 +27,44 @@ class PaymentComponent extends Component {
         axios.defaults.headers.common['Authorization'] = localStorage.getItem('idToken');
         const url = Constants.fetchPosts;
         HttpService.postRequest(url, body)
-            // .then(response => {
             .then(response => {
-                console.log(response);
-                // console.log('response:-> ',response);
                 if (response.status !== 200) {
-                    // this.errorGetAdmin(response);
-                    console.log('errorGetAdmin', response);
+                    // this.errorGetEmployeeList(response);
+
                 } else {
-                    // this.successGetAdmin(response);
-                    console.log('successGetAdmin', response);
+                    // this.successGetEmployeeList(response);
+                    console.log(response);
+                    this.setState({
+                        posts: response.data.posts
+                    })
                 }
-                console.log(response);
             })
             .catch(function (error) {
-                // this.stopLoader();
                 console.log(error);
             })
+
+            // console.log("STATUS: ",this.state)
     }
 
     render() {
         return (
             <div>
                 <button onClick={this.fetchGroupDetails} className="btn btn-danger">Click Here..!</button>
+                {
+                    this.state.posts.length > 0 ?
+                        <div>Post Id      Date
+                            {this.state.posts.map((post) =>
+                            <li key={post.postId.toString()}>
+                                {post.postId}    {post.date}
+                            </li>
+                        )}
+
+                        </div>
+                        : null
+                }
+                <div>
+
+                </div>
             </div >
         );
     }

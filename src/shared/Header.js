@@ -1,8 +1,52 @@
 import React, { Component } from 'react';
 import logo from '../../src/VKP_School.jpg';
 import { Link } from 'react-router';
+import axios from 'axios';
+import Constants from '../ServerConstants';
+import HttpService from '../Services/HTTPService';
 
 class Header extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: ''
+    }
+    this.onLoadHandler = this.onLoadHandler.bind(this);
+  }
+
+  componentDidMount() {
+    window.addEventListener('load', this.onLoadHandler);
+  }
+
+  onLoadHandler() {
+
+    const body = {
+      "school_id": "1",
+      "user_id": "123456789_Shrutika"
+    }
+
+    axios.defaults.headers.common['Authorization'] = localStorage.getItem('idToken');
+    const url = Constants.fetchUserDetails;
+    HttpService.postRequest(url, body)
+      .then(response => {
+        if (response.status !== 200) {
+          alert('Error: ' + JSON.stringify(response));
+        } else {
+          console.log("responseeeee  ",response);
+          this.setState(
+            {
+              username: response.data.user.user_id
+            }
+          )
+        }
+        console.log("STATEEE: ", this.state);
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+
+  }
 
   render() {
     return (
@@ -22,7 +66,7 @@ class Header extends Component {
 
           <label className="dropdown">
             <button className="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              User Name
+              user
             </button>
             <div className="dropdown-menu" >
               <Link activeClassName='btn btn-white' to="/profile" className="m-1 btn btn-white text-dark"> Profile </Link>

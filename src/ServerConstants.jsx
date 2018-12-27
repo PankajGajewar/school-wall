@@ -1,6 +1,8 @@
 const constants = {
 
     fetchPosts : "https://fe3gk4ht5g.execute-api.ap-south-1.amazonaws.com/DIT/fetchPosts",
+
+    fetchUserDetails: 'https://fe3gk4ht5g.execute-api.ap-south-1.amazonaws.com/DIT/fetchUserDetails',
     
     editPost: ' https://fe3gk4ht5g.execute-api.ap-south-1.amazonaws.com/DIT/editPost',
     
