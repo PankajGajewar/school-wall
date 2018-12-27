@@ -11,10 +11,7 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use(function (config) {
-    // const token = localStorage.getItem('idToken');
-    axios.defaults.headers.common['Authorization'] = localStorage.getItem('idToken');
-    // axios.defaults.headers.append('Authorization', localStorage.getItem('idToken'));
-    console.log('Request configuration : ' + JSON.stringify(config));
+    instance.defaults.headers.common['Authorization'] = localStorage.getItem('keyToken');
     return config;
 }, function (error) {
     console.log('Error in request interceptor : ' + JSON.stringify(error));
@@ -59,9 +56,9 @@ function postRequest(url, data) {
     return instance.post(url, data)
         .then(function (response) {
             // return response;
-            console.log(response);
+            console.log('POST',response);
         }).catch(function (error) {
-            // return error;
-            console.log('error:',error);
+            return error;
+            // console.log('error:',error);
         });
 }
