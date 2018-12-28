@@ -11,7 +11,10 @@ class HomeComponent extends Component {
         this.state = {
             posts: []
         }
+        
         this.onLoadHandler = this.onLoadHandler.bind(this);
+        this.onLikeHandler = this.onLikeHandler.bind(this);
+        this.onUnLikeHandler = this.onUnLikeHandler.bind(this);
         this.onLoadHandler();
         // window.addEventListener('load', this.onLoadHandler);
     }
@@ -32,7 +35,7 @@ class HomeComponent extends Component {
 
         const body = {
             "direction": "next",
-            "page_size": "10",
+            "page_size": "20",
             "post_id": "1",
             "role": "parent",
             "school_id": "1",
@@ -61,6 +64,14 @@ class HomeComponent extends Component {
 
     }
 
+    onLikeHandler(e) {
+        console.log("Liked Post: ", e.target.value);
+    }
+
+    onUnLikeHandler(e) {
+        console.log("UnLiked Post: ", e.target.value);
+    }
+
     render() {
         return (
             <div className="row">
@@ -69,8 +80,8 @@ class HomeComponent extends Component {
                     {
                         this.state.posts.length > 0 ?
                             <div>
-                                {this.state.posts.map((post) =>
-                                    <div className="card m-2 ">
+                                {this.state.posts.map((post, index) =>
+                                    <div className="card m-2" key={index}>
 
                                         {/* <li key={post.postId.toString()}>
                                             {post.postId}    {post.date}
@@ -88,51 +99,78 @@ class HomeComponent extends Component {
                                             <p className="row text text-justify p-4">
                                                 {post.text.trim()}
                                             </p>
-                                            {/* {
-                                                <p className="d-inine">
-                                                    <p className="d-inline">
+                                            {
+                                                post.media.map((media, index) =>
+                                                    // <p key={index}>URL {m.url}</p>
+                                                    <div key={index}>
+                                                    TYPE: {media.type}
                                                         {
-                                                            (post.likes.length > 0) ? <p className="text-left small">{post.likes.length} Likes
-                                                                <p className="d-inline">
-                                                                    {
-                                                                        (post.comments.length > 0) ? <p className="text-left ">{post.comments.length} Comments
-                                                                        <p className="d-inline">
-                                                                                {
-                                                                                    (post.likes.length > 0) ? <p className="text-left ">{post.likes.length} Likes
-                                                                                </p> : null
-                                                                                }
-                                                                            </p>
-
-                                                                        </p> : null
-                                                                    }
-                                                                </p>
-                                                            </p> : null
+                                                            (media.type === "video") ?
+                                                                <div className="row">
+                                                                    <div className="col-md-11 mx-auto">
+                                                                        <video width="450" controls>
+                                                                            <source src={media.url} type="video/mp4" poster={media.thumbnailUrl} />
+                                                                            {/* <source src="mov_bbb.ogg" type="video/ogg" /> */}
+                                                                            Video does not supported.
+                                                                        </video>
+                                                                    </div>
+                                                                </div>
+                                                            : null
+                                                            (media.type === "image") ?
+                                                                <div className="row">
+                                                                    <div className="col-md-11 mx-auto">
+                                                                        <img src={media.url} width="100px" height="100px"
+                                                                            alt="Unable to load image" className="p-2" />
+                                                                        Image does not supported.
+                                                                    </div>
+                                                                </div>
+                                                            : null
                                                         }
-                                                    </p>
+                                                    </div>
+                                                )
+                                            }
+                                            {
+                                                <p className="d-left">
+                                                    <span className="d-inline">
+                                                        {
+                                                            (post.likes.length > 0) ? <p className="text-left small">{post.likes.length} Likes</p> : null
+                                                        }
+                                                    </span>
+                                                    <span className="d-inline">
+                                                        {
+                                                            (post.comments.length > 0) ? <p className="text-left small"> {post.comments.length} Comments</p> : null
+                                                        }
+                                                    </span>
+                                                    <span className="d-inline">
+                                                        {
+                                                            (post.postReportAbuse.hasReported == true) ? <p className="text-left small">Reported</p> : null
+                                                        }
+                                                    </span>
                                                 </p>
-                                            } */}
+                                            }
                                             <hr></hr>
                                             <div className="row">
                                                 <div className="col-md-8 mx-auto">
                                                     <div className="row">
                                                         <div className="col-md-4">
                                                             {
-                                                                (post.likes.length > 0) ?
-                                                                    <button className="btn  btn-primary">{post.likes.length} Likes</button> :
-                                                                    <button className="btn btn-light">Like</button>
+                                                                (post.hasLiked == true) ?
+                                                                    <button type="button" className="btn  btn-primary" value={index} onClick={this.onUnLikeHandler}>Like</button> :
+                                                                    <button type="button" className="btn  btn-light" value={index} onClick={this.onLikeHandler}>Like</button>
                                                             }
                                                         </div>
                                                         <div className="col-md-4">
                                                             {
                                                                 (post.comments.length > 0) ?
-                                                                    <button className="btn  btn-secondary">{post.comments.length} Comments</button>
+                                                                    <button className="btn  btn-secondary">{post.comments.length} Comment</button>
                                                                     // add comment text-area
                                                                     : <button className="btn  btn-light">Comment</button>
                                                             }
                                                         </div>
                                                         <div className="col-md-4">
                                                             {
-                                                                (post.postReportAbuse.hasReported == true) ?
+                                                                // (post.postReportAbuse.hasReported == true) ?
+                                                                (post.likes.length > 0) ?
                                                                     <button className="btn btn-block btn-warning">Reported</button> :
                                                                     <button className="btn btn-block btn-light">Report</button>
                                                             }
@@ -140,21 +178,48 @@ class HomeComponent extends Component {
                                                     </div>
                                                 </div>
                                             </div>
-                                            {
-                                                (post.comments.length > 0) ?
-                                                    <div className="row">
-                                                        <div className="col-md-12 mx-auto comm">
-                                                            <span className="small text-left">{post.comments["0"].owner.name}</span>
-                                                            <br></br>
-                                                            <textarea readOnly name={post.comments["0"].comment} className="rounded">
-                                                                {/* <script>
-                                                                    document.querySelector('comments').innerHTML = ({post.comments["0"].owner.name} + {post.comments["0"].owner.comment}).toString();
-                                                                </script> */}
-                                                            </textarea>
+                                            <div>
+                                                {
+                                                    (post.comments.length > 0) ?
+                                                        <div className="row text-left mt-2 mb-2">
+                                                            <div className="col-md-11 mx-auto comm">
+                                                                <div className="row text">
+                                                                    <span className="text-left">{post.comments["0"].owner.name}</span>
+                                                                </div>
+                                                                {
+                                                                    (post.comments.length > 1) ?
+                                                                        <div className="row card card-body bg-white border-0 p-0">
+                                                                            <div className="row">
+                                                                                <div className="col-md-12 mx-auto">
+                                                                                    <input className="form-control m-0" value={post.comments["0"].comment} readOnly />
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        : null
+                                                                }
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    : null
-                                            }
+                                                        : null
+                                                }
+
+                                                {
+                                                    (post.comments.length == 0) ?
+                                                        <div className="row card card-body bg-white border-0 p-0  mt-2 mb-2">
+                                                            <div className="col-md-12 mx-auto">
+                                                                <div className="row">
+                                                                    <div className="col-md-10 mx-auto">
+                                                                        <input className="form-control m-0" />
+                                                                    </div>
+                                                                    <div className="col-md-2 p-0">
+                                                                        <div className="row pl-1">
+                                                                            <button className="btn btn-primary">Comment</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div> : null
+                                                }
+                                            </div>
                                         </div>
                                     </div>
                                 )}

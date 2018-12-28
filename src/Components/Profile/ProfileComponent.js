@@ -9,7 +9,8 @@ class ProfileComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userDetails: []
+            userDetails: [],
+            profile: []
         }
         this.onLoadHandler = this.onLoadHandler.bind(this);
         this.onLoadHandler();
@@ -33,6 +34,7 @@ class ProfileComponent extends Component {
                 if (response.status !== 200) {
                     alert('Error: ' + response);
                 } else {
+                    // this.loadProfilePicture();
                     this.setState(
                         {
                             userDetails: response.data.user
@@ -47,10 +49,37 @@ class ProfileComponent extends Component {
 
     }
 
+    // loadProfilePicture() {
+    //     const body = {
+    //         "school_id": "1",
+    //         "user_id": "123456789_Shrutika"
+    //     }
+
+    //     axios.defaults.headers.common['Authorization'] = localStorage.getItem('idToken');
+    //     const url = Constants.fetchUserDetails;
+    //     HttpService.postRequest(url, body)
+    //         .then(response => {
+    //             if (response.status !== 200) {
+    //                 alert('Error: ' + response);
+    //             } else {
+    //                 // this.loadProfilePicture();
+    //                 this.setState(
+    //                     {
+    //                         profile: response.data.user
+    //                     }
+    //                 )
+    //             }
+    //             console.log("GET STATE: ", this.state);
+    //         })
+    //         .catch(function (error) {
+    //             console.log(error);
+    //         })
+
+    // }
+
     saveChanges = () => {
-        console.log("fname: ", this.state.fname);
-        console.log("lname: ", this.state.lname);
-        console.log("dob: ", this.state.dob);
+        console.log("fname: ", this.state.userDetails[0].firstName);
+        console.log("lname: ", this.state.userDetails[0].lastName);
         alert("Changes Saved");
         // browserHistory.push('/dashboard');
     }
@@ -61,31 +90,24 @@ class ProfileComponent extends Component {
     //     );
     // }
 
-    // lnameHandler = (event) => {
-    //     this.setState(
-    //         { lname: event.target.value }
-    //     );
-    // }
-
-    // dobHandler = (event) => {
-    //     this.setState(
-    //         { dob: event.target.value }
-    //     );
-    // }
-
     render() {
         return (
             <form>
+                {/* <div>
+                    {
+                        this.state.profile.map((user, index) =>
+                            <img key={index} src={user.profilePicture} width="100px" height="100px" alt="Unable to load image" className="p-2" />
+                        )
+                    }
+                </div> */}
                 {
-                    this.state.userDetails.map((user) =>
-                        <div className="row">
+                    this.state.userDetails.map((user, index) =>
+                        <div className="row" key={index}>
                             <div className="col-md-6 p-5">
                                 <div className="row text-left">
                                     <div className="col-md-8 mx-auto">
                                         <h2 className="text-center">Personal Details</h2>
                                         <hr></hr>
-
-
                                         <div className="form-group">
                                             <label>First Name</label><span className="text-danger">*</span>
                                             <input className="form-control" type="text" required
@@ -104,8 +126,7 @@ class ProfileComponent extends Component {
 
                                         <div className="form-group">
                                             <label>User ID</label><span className="text-danger">*</span>
-                                            <input className="form-control" type="tel" required
-                                                value={user.user_id} readOnly></input>
+                                            <input className="form-control" type="tel" value={user.user_id} readOnly></input>
                                         </div>
 
                                         <div className="form-group">
@@ -139,11 +160,11 @@ class ProfileComponent extends Component {
                                         </div>
                                         <div className="form-group">
                                             <label>Address</label><span className="text-danger">*</span>
-                                            <textarea className="form-control" value={user.address}></textarea>
+                                            <textarea className="form-control" name="address" value={user.address}></textarea>
                                         </div>
                                         <div className="form-group">
                                             <label>House Address</label><span className="text-danger">*</span>
-                                            <textarea className="form-control" value={user.house}></textarea>
+                                            <textarea className="form-control" name="house" value={user.house}></textarea>
                                         </div>
 
 
@@ -151,7 +172,7 @@ class ProfileComponent extends Component {
                                 </div>
                             </div>
                             {/* 2nd Column */}
-                            <div className="col-md-6 p-5">
+                            < div className="col-md-6 p-5" >
                                 <div className="row text-left">
                                     <div className="col-md-8 mx-auto">
                                         {/* 2-1 */}
@@ -159,22 +180,20 @@ class ProfileComponent extends Component {
                                             <div className="col-md">
                                                 <h2 className="text-center">School Details</h2>
                                                 <hr></hr>
-                                                    <label>School ID: {user.school_id}</label><br></br>
-                                                    <label>School Name: {user.schoolName}</label><br></br>
-                                                    <label>Student ID: {user.student_id}</label><br></br>
-                                                    <label>Roll No.: {user.roll_no}</label><br></br>
-                                                    <label>Class: {user.class_name}</label><br></br>
-                                                    <label>School Start Date: {user.school_start_date}</label><br></br>
-                                                    <label>School End Date: {user.school_end_date}</label>
+                                                <label>School ID: {user.school_id}</label><br></br>
+                                                <label>School Name: {user.schoolName}</label><br></br>
+                                                <label>Student ID: {user.student_id}</label><br></br>
+                                                <label>Roll No.: {user.roll_no}</label><br></br>
+                                                <label>Class: {user.class_name}</label><br></br>
+                                                <label>School Start Date: {user.school_start_date}</label><br></br>
+                                                <label>School End Date: {user.school_end_date}</label>
                                             </div>
                                         </div>
                                         {/* 2-2 */}
-                                        {/* <br></br> */}
                                         <div className="row">
                                             <div className="col-md">
                                                 <h2 className="text-center">Bus Pickup Details</h2>
                                                 <hr></hr>
-
                                                 <div>
                                                     <label>Pickup Bus No.: {user.busNoForPickup}</label><br></br>
                                                     <label>Bus Pickup Location: {user.busPickupLocation}</label><br></br>
@@ -185,9 +204,7 @@ class ProfileComponent extends Component {
                                                     <label>Bus Drop Time: {user.busDropTime}</label><br></br>
                                                     <label>Bus Drop Route: {user.dropBusRoute}</label><br></br>
                                                     <label>Emergency Contact: {user.emergencyContact}</label><br></br>
-
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -195,13 +212,14 @@ class ProfileComponent extends Component {
                             </div>
                         </div>
 
-                    )}
+                    )
+                }
                 <div className="row">
                     <div className="col-md-2 mx-auto">
                         <button type="submit" onClick={this.saveChanges} className="btn btn-success" > Save Changes</button>
                     </div>
                 </div>
-            </form>
+            </form >
         );
     }
 }
