@@ -10,7 +10,8 @@ class HomeComponent extends Component {
         super(props);
         this.state = {
             posts: [],
-            comment: ''
+            comment: '',
+            newPost: ''
         }
 
         this.onLoadHandler = this.onLoadHandler.bind(this);
@@ -18,21 +19,14 @@ class HomeComponent extends Component {
         this.onUnLikeHandler = this.onUnLikeHandler.bind(this);
         this.onComment = this.onComment.bind(this);
         this.onCommentHandler = this.onCommentHandler.bind(this);
+        this.onNewPost = this.onNewPost.bind(this);
+        this.onPostHandler = this.onPostHandler.bind(this);
         this.onLoadHandler();
-        // window.addEventListener('load', this.onLoadHandler);
     }
 
     componentDidMount() {
         window.addEventListener('load', this.onLoadHandler);
     }
-
-    // componentWillMount() {
-    //     window.addEventListener('load', this.onLoadHandler);
-    // }
-
-    // componentDidUpdate() {
-    //     window.addEventListener('load', this.onLoadHandler);
-    // }
 
     onLoadHandler() {
 
@@ -59,7 +53,6 @@ class HomeComponent extends Component {
                         }
                     )
                 }
-                // console.log("STATE: ", this.state);
             })
             .catch(function (error) {
                 console.log(error);
@@ -76,18 +69,15 @@ class HomeComponent extends Component {
     }
 
     onLikeHandler(e) {
-        // console.log("Liked Post: ", e.target.value);
         const postId = e.target.value;
         const body = {
             "role": "parent",
             "school_id": "1",
             "user_id": "GR343343",
-            // "post_id": "55",
             "post_id": postId,
-            "liked": "true",
-            "hasLiked": "true"
+            "liked": "true"
+            // "hasLiked": "true"
         }
-        // console.log(postId)
         axios.defaults.headers.common['Authorization'] = localStorage.getItem('idToken');
         const url = Constants.likePost;
         HttpService.postRequest(url, body)
@@ -99,7 +89,6 @@ class HomeComponent extends Component {
                     console.log("Like Message: ", response.data.message);
                     this.onLoadHandler();
                 }
-                // console.log("STATE: ", this.state);
             })
             .catch(function (error) {
                 console.log(error);
@@ -108,7 +97,6 @@ class HomeComponent extends Component {
     }
 
     onUnLikeHandler(e) {
-        // console.log("Liked Post: ", e.target.value);
         const postId = e.target.value;
         const body = {
             "role": "parent",
@@ -117,7 +105,6 @@ class HomeComponent extends Component {
             "post_id": postId,
             "liked": "false"
         }
-        // console.log(postId)
         axios.defaults.headers.common['Authorization'] = localStorage.getItem('idToken');
         const url = Constants.likePost;
         HttpService.postRequest(url, body)
@@ -129,7 +116,6 @@ class HomeComponent extends Component {
                     console.log("Un Like Message: ", response.data.message);
                     this.onLoadHandler();
                 }
-                // console.log("STATE: ", this.state);
             })
             .catch(function (error) {
                 console.log(error);
@@ -165,21 +151,57 @@ class HomeComponent extends Component {
                     if (response.status !== 200) {
                         alert('Error: ' + response);
                     } else {
-                        // console.log("Comment ID: ", response.data.id);
-                        // console.log("Comment Message: ", response.data.message);
-                        // console.log(response)
                         this.setState({
                             comment: ''
                         });
                         this.onLoadHandler();
-                        // document.getElementById("commentBox").value = "";
                     }
-                    // console.log("STATE: ", this.state);
                 })
                 .catch(function (error) {
                     console.log(error);
                 })
-            //     e.preventDefault();
+        }
+    }
+
+    onNewPost = (e) => {
+        this.setState({
+            newPost: e.target.value
+        });
+    }
+
+    onPostHandler() {
+        if (this.state.newPost == '') {
+            alert('Ennter message for new POst');
+        }
+        else {
+            const body = {
+                "commentsDisabled": "false",
+                "media": [],
+                "postOwnerId": "GR343343",
+                "postedGroupId": "1",
+                "role": "parent",
+                "school_id": "1",
+                "text": this.state.newPost,
+                "timestamp": ""
+            }
+
+            axios.defaults.headers.common['Authorization'] = localStorage.getItem('idToken');
+            const url = Constants.createPost;
+            HttpService.postRequest(url, body)
+                .then(response => {
+                    if (response.status !== 200) {
+                        alert('Error: ' + response);
+                    } else {
+                        console.log("New Post Message: ", response.data.message);
+                        this.setState({
+                            newPost: ''
+                        });
+                        this.onLoadHandler();
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
         }
     }
 
@@ -191,28 +213,24 @@ class HomeComponent extends Component {
             <div className="row">
                 <div className="col-md-7 mx-auto">
                     <div className="card card-body m-2">
-                        <form>
+                        {/* <form> */}
                             <div className="row">
                                 <div className="col-md-12">
                                     <div className="form-group">
-                                        <textarea className="form-control" placeholder="Write something here.."></textarea>
+                                        <textarea className="form-control" defaultValue={this.state.newPost} onChange={this.onNewPost} placeholder="Write something here.."></textarea>
                                     </div>
                                 </div>
                             </div>
                             <div className="row ml-1">
-                                <button className="btn btn-info">Post</button>
+                                <button className="btn btn-info" onClick={this.onPostHandler}>Post</button>
                             </div>
-                        </form>
+                        {/* </form> */}
                     </div>
                     {
                         this.state.posts.length > 0 ?
                             <div>
                                 {this.state.posts.map((post, index) =>
                                     <div className="card m-2" key={index}>
-
-                                        {/* <li key={post.postId.toString()}>
-                                            {post.postId}    {post.date}
-                                        </li> */}
                                         <div className="card-body">
                                             <div className="row">
                                                 <div className="col-md-2 my-auto">
@@ -223,22 +241,19 @@ class HomeComponent extends Component {
                                                     <p className="d-inline border-warning vsmall" id="groupName">Group: {post.postedGroup[0].name}</p><p className="vsmall d-inline"> {post.date}, {post.time}</p>
                                                 </div>
                                             </div>
-                                            <p className="row text text-justify p-4">
+                                            <div className="row text text-justify p-4">
                                                 {post.text.trim()}
-                                                <br></br>{(post.hasLiked == true) ? <p><br></br>Liked</p> : <p><br></br>Not-Liked</p>}
-                                            </p>
+                                                {/* <br></br>{(post.hasLiked == true) ? <p><br></br>Liked</p> : <p><br></br>Not-Liked</p>} */}
+                                            </div>
                                             {
                                                 post.media.map((media, index) =>
-                                                    // <p key={index}>URL {m.url}</p>
                                                     <div key={index}>
-                                                        {/* TYPE: {media.type} */}
                                                         {
                                                             (media.type === "video") ?
                                                                 <div className="row">
                                                                     <div className="col-md-11 mx-auto">
                                                                         <video width="450" controls>
                                                                             <source src={media.url} type="video/mp4" poster={media.thumbnailUrl} />
-                                                                            {/* <source src="mov_bbb.ogg" type="video/ogg" /> */}
                                                                             Video does not supported.
                                                                         </video>
                                                                     </div>
@@ -258,7 +273,7 @@ class HomeComponent extends Component {
                                                 )
                                             }
                                             {
-                                                <p className="d-left">
+                                                <div className="d-left">
                                                     <span className="d-inline">
                                                         {
                                                             (post.likes.length > 0) ? <p className="text-left small">{post.likes.length} Likes</p> : null
@@ -274,7 +289,7 @@ class HomeComponent extends Component {
                                                             (post.postReportAbuse.hasReported == true) ? <p className="text-left small">Reported</p> : null
                                                         }
                                                     </span>
-                                                </p>
+                                                </div>
                                             }
                                             <hr></hr>
                                             <div className="row">
@@ -288,16 +303,11 @@ class HomeComponent extends Component {
                                                             }
                                                         </div>
                                                         <div className="col-md-4">
-                                                            {/* {
-                                                                (post.comments.length > 0) ?
-                                                                    <button className="btn  btn-secondary">Comment</button>
-                                                                    : <button className="btn  btn-light">Comment</button>
-                                                            } */}
                                                             <button className="btn  btn-light" value={index} onClick={this.btnComment}>Comment</button>
                                                         </div>
                                                         <div className="col-md-4">
                                                             {
-                                                                (post.likes.length > 0) ?
+                                                                (post.postReportAbuse.hadReported == true) ?
                                                                     <button className="btn btn-block btn-warning">Reported</button> :
                                                                     <button className="btn btn-block btn-light">Report</button>
                                                             }

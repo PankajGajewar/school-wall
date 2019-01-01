@@ -92,82 +92,82 @@ class ProfileComponent extends Component {
 
     render() {
         return (
-            <form>
-                {/* <div>
+            <div>
+                <div>
                     {
                         this.state.profile.map((user, index) =>
-                            <img key={index} src={user.profilePicture} width="100px" height="100px" alt="Unable to load image" className="p-2" />
+                            <img key={index} className="border border-dark" src={user.profilePicture} width="500px" height="500px" alt="Unable to load image" className="p-2" />
                         )
                     }
-                </div> */}
+                </div>
                 {
                     this.state.userDetails.map((user, index) =>
                         <div className="row" key={index}>
                             <div className="col-md-6 p-5">
                                 <div className="row text-left">
                                     <div className="col-md-8 mx-auto">
-                                        <h2 className="text-center">Personal Details</h2>
-                                        <hr></hr>
-                                        <div className="form-group">
-                                            <label>First Name</label><span className="text-danger">*</span>
-                                            <input className="form-control" type="text" required
-                                                value={user.firstName}></input>
-                                        </div>
-                                        <div className="form-group">
-                                            <label>Last Name</label><span className="text-danger">*</span>
-                                            <input className="form-control" type="text" required
-                                                value={user.lastName}></input>
-                                        </div>
-                                        <div className="form-group">
-                                            <label>Blood Group</label>
-                                            <input className="form-control" type="text" required
-                                                value={user.bloodGroup}></input>
-                                        </div>
+                                        <form>
+                                            <h2>Personal Details</h2>
+                                            <hr className="form-control p-0 border-danger"></hr>
+                                            <div className="form-group">
+                                                <label>First Name</label><span className="text-danger">*</span>
+                                                <input className="form-control" type="text" required
+                                                    defaultValue={user.firstName}></input>
+                                            </div>
+                                            <div className="form-group">
+                                                <label>Last Name</label><span className="text-danger">*</span>
+                                                <input className="form-control" type="text" required
+                                                    defaultValue={user.lastName}></input>
+                                            </div>
+                                            <div className="form-group">
+                                                <label>Blood Group</label>
+                                                <input className="form-control" type="text" required
+                                                    defaultValue={user.bloodGroup}></input>
+                                            </div>
 
-                                        <div className="form-group">
-                                            <label>User ID</label><span className="text-danger">*</span>
-                                            <input className="form-control" type="tel" value={user.user_id} readOnly></input>
-                                        </div>
+                                            <div className="form-group">
+                                                <label>User ID</label><span className="text-danger">*</span>
+                                                <input className="form-control" type="tel" defaultValue={user.user_id} readOnly></input>
+                                            </div>
 
-                                        <div className="form-group">
-                                            <label>Email</label>
-                                            <input className="form-control" type="email" required
-                                                value={user.user_email}></input>
-                                        </div>
-
-
-                                        <div className="form-group">
-                                            <label>Father Name</label><span className="text-danger">*</span>
-                                            <input className="form-control" type="text" required
-                                                value={user.fatherName}></input>
-                                        </div>
+                                            <div className="form-group">
+                                                <label>Email</label>
+                                                <input className="form-control" type="email" required
+                                                    defaultValue={user.user_email}></input>
+                                            </div>
 
 
-                                        <div className="form-group">
-                                            <label>Father Mobile Number</label><span className="text-danger">*</span>
-                                            <input className="form-control" type="text" required
-                                                value={user.fatherMobileNumber}></input>
-                                        </div>
-                                        <div className="form-group">
-                                            <label>Mother Name</label><span className="text-danger">*</span>
-                                            <input className="form-control" type="text" required
-                                                value={user.motherName}></input>
-                                        </div>
-                                        <div className="form-group">
-                                            <label>Mother Mobile Number</label><span className="text-danger">*</span>
-                                            <input className="form-control" type="tel" required
-                                                value={user.motherMobileNo}></input>
-                                        </div>
-                                        <div className="form-group">
-                                            <label>Address</label><span className="text-danger">*</span>
-                                            <textarea className="form-control" name="address" value={user.address}></textarea>
-                                        </div>
-                                        <div className="form-group">
-                                            <label>House Address</label><span className="text-danger">*</span>
-                                            <textarea className="form-control" name="house" value={user.house}></textarea>
-                                        </div>
+                                            <div className="form-group">
+                                                <label>Father Name</label><span className="text-danger">*</span>
+                                                <input className="form-control" type="text" required
+                                                    defaultValue={user.fatherName}></input>
+                                            </div>
 
 
+                                            <div className="form-group">
+                                                <label>Father Mobile Number</label><span className="text-danger">*</span>
+                                                <input className="form-control" type="text" required
+                                                    defaultValue={user.fatherMobileNumber}></input>
+                                            </div>
+                                            <div className="form-group">
+                                                <label>Mother Name</label><span className="text-danger">*</span>
+                                                <input className="form-control" type="text" required
+                                                    defaultValue={user.motherName}></input>
+                                            </div>
+                                            <div className="form-group">
+                                                <label>Mother Mobile Number</label><span className="text-danger">*</span>
+                                                <input className="form-control" type="tel" required
+                                                    defaultValue={user.motherMobileNo}></input>
+                                            </div>
+                                            <div className="form-group">
+                                                <label>Address</label><span className="text-danger">*</span>
+                                                <textarea className="form-control" name="address" defaultValue={user.address}></textarea>
+                                            </div>
+                                            <div className="form-group">
+                                                <label>House Address</label><span className="text-danger">*</span>
+                                                <textarea className="form-control" name="house" defaultValue={user.house}></textarea>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -178,8 +178,8 @@ class ProfileComponent extends Component {
                                         {/* 2-1 */}
                                         <div className="row">
                                             <div className="col-md">
-                                                <h2 className="text-center">School Details</h2>
-                                                <hr></hr>
+                                                <h2>School Details</h2>
+                                                <hr className="form-control p-0 border-danger"></hr>
                                                 <label>School ID: {user.school_id}</label><br></br>
                                                 <label>School Name: {user.schoolName}</label><br></br>
                                                 <label>Student ID: {user.student_id}</label><br></br>
@@ -192,8 +192,10 @@ class ProfileComponent extends Component {
                                         {/* 2-2 */}
                                         <div className="row">
                                             <div className="col-md">
-                                                <h2 className="text-center">Bus Pickup Details</h2>
-                                                <hr></hr>
+                                                <h2>Bus Pickup Details</h2>
+                                                {/* <hr></hr> */}
+                                                {/* <hr className="form-control p-0 border-danger"></hr> */}
+                                                <hr className="form-control p-0 border-danger"></hr>
                                                 <div>
                                                     <label>Pickup Bus No.: {user.busNoForPickup}</label><br></br>
                                                     <label>Bus Pickup Location: {user.busPickupLocation}</label><br></br>
@@ -219,7 +221,7 @@ class ProfileComponent extends Component {
                         <button type="submit" onClick={this.saveChanges} className="btn btn-success" > Save Changes</button>
                     </div>
                 </div>
-            </form >
+            </div>
         );
     }
 }
